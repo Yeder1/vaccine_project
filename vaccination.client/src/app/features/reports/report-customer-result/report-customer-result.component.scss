@@ -1,0 +1,36 @@
+.report-container {
+  padding: 16px;
+
+  .filter-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .filter-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: center;
+
+    input, button, select {
+      margin-right: 8px;
+    }
+  }
+
+  .customer-table {
+    width: 100%;
+    border-collapse: collapse;
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+  }
+
+  .chart-container {
+    margin-top: 20px;
+  }
+}

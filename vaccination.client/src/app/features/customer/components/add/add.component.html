@@ -1,0 +1,86 @@
+<p-toast></p-toast> 
+<div class="container mt-5">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <!-- Personal Information Section -->
+        <div class="form-section">
+            <h5>Personal Information</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="fullName" class="form-label">Full Name<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" formControlName="fullName">
+                    <div *ngIf="isFieldInvalid('fullName')" class="text-danger">Full Name is required (3 to 100 characters).</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="dob" class="form-label">Date of Birth<span class="text-danger">*</span></label>
+                    <input type="date" class="form-control" id="dob" formControlName="dateOfBirth">
+                    <div *ngIf="isFieldInvalid('dateOfBirth')" class="text-danger">Date of Birth is required and must be valid.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="identityCard" class="form-label">Identity Card<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="identityCard" placeholder="Enter your ID number" formControlName="identityCard">
+                    <div *ngIf="isFieldInvalid('identityCard')" class="text-danger">Identity Card must be exactly 10 numeric digits.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="address" class="form-label">Address<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="address" placeholder="Enter your address" formControlName="address">
+                    <div *ngIf="isFieldInvalid('address')" class="text-danger">Address is required (max 100 characters).</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="gender" class="form-label">Gender</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="male" value="true" formControlName="gender">
+                            <label class="form-check-label" for="male">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="gender" id="female" value="false" formControlName="gender">
+                            <label class="form-check-label" for="female">Female</label>
+                        </div>
+                    </div>
+                    <div *ngIf="isFieldInvalid('gender')" class="text-danger">Gender is required.</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Account Information Section -->
+        <div class="form-section">
+            <h5>Account Information</h5>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="username" class="form-label">Username<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="username" placeholder="Enter your username" formControlName="username">
+                    <div *ngIf="isFieldInvalid('username')" class="text-danger">Username is required (max 10 characters).</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="password" class="form-label">Password<span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" id="password" placeholder="Enter your password" formControlName="password">
+                    <div *ngIf="isFieldInvalid('password')" class="text-danger">Password is required (6 to 20 characters).</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="confirmPassword" class="form-label">Confirm Password<span class="text-danger">*</span></label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password" formControlName="confirmPassword">
+                    <div *ngIf="isFieldInvalid('confirmPassword')" class="text-danger">Confirm Password is required and must match the password.</div>
+                    <div *ngIf="isPasswordMismatch()" class="text-danger">Passwords do not match.</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" formControlName="email">
+                    <div *ngIf="isFieldInvalid('email')" class="text-danger">Invalid email format (max 25 characters).</div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="phone" class="form-label">Phone<span class="text-danger">*</span></label>
+                    <input type="tel" class="form-control" id="phone" placeholder="Enter your phone number" formControlName="phone">
+                    <div *ngIf="isFieldInvalid('phone')" class="text-danger">Phone number must be exactly 11 numeric digits.</div>
+                </div>
+            </div>
+        </div>
+        <!-- Buttons -->
+        <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-success me-2">
+                {{ isEditMode ? 'Update' : 'Save' }}
+              </button>
+            <button type="button" class="btn btn-primary me-2" (click)="resetForm()">Reset</button>
+            <button type="button" class="btn btn-warning" (click)="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

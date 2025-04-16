@@ -1,0 +1,79 @@
+<div class="container">
+    <h2 class="text-center">CREATE VACCINE TYPE</h2>
+    <div class="card">
+        <form [formGroup]="vaccineTypeForm" class=" m-3" (ngSubmit)="onSubmit()">
+
+            <div class="form-group mb-4 row">
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="vaccineTypeCode">Vaccine Type Code <span class="text-danger">(*)</span></label>
+                        <div class="d-flex align-items-center">
+                            <fa-icon class="me-2" icon="fill-drip"></fa-icon>
+                            <input id="vaccineTypeCode" formControlName="vaccineTypeCode" class="form-control" />
+                        </div>
+                        <div *ngIf="vaccineTypeForm.get('vaccineTypeCode')?.invalid && vaccineTypeForm.get('vaccineTypeCode')?.touched"
+                            class="text-danger">
+                            Vaccine type code is required.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="vaccineTypeName">Vaccine Type Name <span class="text-danger">(*)</span></label>
+                    <div class="d-flex align-items-center">
+                        <fa-icon icon="fill-drip" class="me-2"></fa-icon>
+                        <input id="vaccineTypeName" formControlName="vaccineTypeName" class="form-control" />
+                    </div>
+                    <div *ngIf="vaccineTypeForm.get('vaccineTypeName')?.invalid && vaccineTypeForm.get('vaccineTypeName')?.touched"
+                        class="text-danger">
+                        Vaccine type name is required and should be at most 100 characters.
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="isActive">Active <span class="text-danger">(*)</span></label>
+                        <div class="d-flex align-items-center">
+                            <fa-icon icon="fill-drip" class="me-5"></fa-icon>
+                            <p-checkbox id="isActive" [binary]="true" formControlName="isActive">
+                            </p-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4 row">
+                <div class="col">
+                    <label for="description">Description</label>
+                    <div class="d-flex align-items-center">
+                        <fa-icon icon="file-lines" class="me-2"></fa-icon>
+                        <textarea id="description" formControlName="description" class="form-control"
+                            rows="4"></textarea>
+                    </div>
+                    <div *ngIf="vaccineTypeForm.get('description')?.invalid && vaccineTypeForm.get('description')?.touched"
+                        class="text-danger">
+                        Usage should not exceed 200 characters.
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="image">Image</label>
+                        <input type="file" class="form-control" id="image" formControlName="image"
+                            (change)="onFileSelected($event)" accept="image/*" />
+                    </div>
+                </div>
+                <div *ngIf="imageUrl" class="mt-3">
+                    <img [src]="imageUrl" alt="Selected Image" style="max-width: 300px; max-height: 200px;" />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-1 mt-2">Save</button>
+            <button type="button" class="btn btn-secondary me-1 mt-2" (click)="onReset()">Reset</button>
+            <button type="button" class="btn btn-danger mt-2" (click)="onCancel()">Cancel</button>
+        </form>
+    </div>
+</div>

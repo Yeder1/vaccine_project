@@ -1,0 +1,54 @@
+<h2>UPDATE INJECTION SCHEDULE</h2>
+<form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="row">
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="vaccineId">Vaccine<span class="text-danger">(*)</span>:</label>
+        <select id="vaccineId" formControlName="vaccineId" required>
+          <option value="">- Select Vaccine -</option>
+          <option *ngFor="let vaccine of vaccines" [value]="vaccine.id">
+            {{ vaccine.vaccineName }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="startDate">From<span class="text-danger">(*)</span>:</label>
+        <input type="date" id="startDate" formControlName="startDate" required>
+        <div *ngIf="dateError" class="text-danger error-message">{{ dateError }}</div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="endDate">To<span class="text-danger">(*)</span>:</label>
+        <input type="date" id="endDate" formControlName="endDate" required>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="form-group">
+        <label for="status">Status<span class="text-danger">(*)</span>:</label>
+        <select id="status" formControlName="status" required>
+          <option value="">- Select Status -</option>
+          <option *ngFor="let status of statusOptions" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col col-4">
+      <label for="place">Place<span class="text-danger">(*)</span>:</label>
+      <textarea class="large-textarea" id="place" formControlName="place" required></textarea>
+    </div>
+    <div class="col col-8">
+      <label for="description">Description:</label>
+      <textarea id="description" class="large-textarea" formControlName="description"></textarea>
+    </div>
+  </div>
+  <div class="button-group">
+    <button type="submit" class="btn save" [disabled]="!updateForm.valid">Update</button>
+    <button type="button" class="btn cancel" (click)="onCancel()">Cancel</button>
+  </div>
+</form>

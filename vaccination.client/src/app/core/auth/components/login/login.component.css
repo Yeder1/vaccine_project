@@ -1,0 +1,20 @@
+.login-page {
+  background-color: #f5f5f5;
+  height: 100vh;
+}
+
+.card {
+  border-radius: 8px;
+}
+
+.mat-icon {
+  font-size: 3rem;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+a {
+  font-size: 0.9rem;
+}

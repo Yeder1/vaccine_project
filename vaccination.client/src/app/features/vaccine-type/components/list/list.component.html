@@ -1,0 +1,61 @@
+<h2 class="text-center">VACCINE TYPE LIST</h2>
+<!-- Vaccine Table -->
+<p-table id="myTable" #table [value]="vaccineTypes" [(selection)]="selectedVaccineTypes" dataKey="id" [paginator]="true" [rows]="rows"
+    [selectionPageOnly]="true"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['vaccineTypeCode', 'vaccineTypeName', 'description']">
+
+    <ng-template pTemplate="caption">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <span class="me-2">Show</span>
+                <select [(ngModel)]="rows" class="form-select form-select-sm me-2">
+                    <option *ngFor="let option of rowsPerPageOptions" [value]="option">{{option}}</option>
+                </select>
+                <span>entries</span>
+            </div>
+
+            <div>
+                <input class="form-control" (input)="applyFilterGlobal($event, 'contains')" type="search"
+                    placeholder="Search" aria-label="Search">
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Table Header -->
+    <ng-template pTemplate="header" >
+        <tr >
+            <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th style="width: 0; display: none;"></th>
+            <th style="min-width:150px">Vaccine Type Code</th>
+            <th style="min-width:150px">Vaccine Type Name</th>
+            <th style="min-width:150px">Description</th>
+            <th style="min-width:150px">Status</th>
+        </tr>
+    </ng-template>
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-vaccineType>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="vaccineType"></p-tableCheckbox>
+            </td>
+            <td style="width: 0; display: none;">{{vaccineType.id}}</td>
+            <td><a routerLink="../update/{{vaccineType.id}}">{{vaccineType.vaccineTypeCode}}</a></td>
+            <td>{{vaccineType.vaccineTypeName}}</td>
+            <td>{{vaccineType.description}}</td>
+            <td>{{ vaccineType.isActive ? 'Active' : 'Inactive' }}</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<!-- Action Buttons -->
+<div class="actions mt-3">
+    <button class="btn btn-primary me-2" (click)="createVaccineType()">New Vaccine</button>
+    <button class="btn btn-danger   " [disabled]="selectedVaccineTypes.length === 0" (click)="deactivateVaccineTypes()">Make
+        In-Active</button>
+</div>

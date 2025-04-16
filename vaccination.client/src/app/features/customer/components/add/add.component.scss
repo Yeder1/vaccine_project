@@ -1,0 +1,20 @@
+.form-section {
+    padding: 20px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    box-shadow: 5px 4px 8px rgba(0, 0, 0, 0.1); 
+    transition: box-shadow 0.3s ease; 
+}
+
+.btn {
+    margin-right: 10px;
+}
+.form-section:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+}
+.form-check-input {
+    border: 2px solid #007bff; /* Đặt viền đậm hơn (2px) và màu xanh dương */
+    
+}

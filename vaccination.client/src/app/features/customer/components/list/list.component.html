@@ -1,0 +1,74 @@
+
+<p-table #table [value]="customers" [(selection)]="selectedCustomers" dataKey="id" [paginator]="true" [rows]="rows"
+    [selectionPageOnly]="true"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['fullName', 'identityCard', 'email', 'phone', 'gender']">
+
+    <ng-template pTemplate="caption">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <span class="me-2">Show</span>
+                <select [(ngModel)]="rows" class="form-select form-select-sm me-2">
+                    <option *ngFor="let option of rowsPerPageOptions" [value]="option">{{option}}</option>
+                </select>
+                <span>entries</span>
+            </div>
+
+            <div>
+                <input class="form-control" (input)="applyFilterGlobal($event, 'contains')" type="search"
+                    placeholder="Search" aria-label="Search">
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Table Header -->
+    <ng-template pTemplate="header" >
+        <tr >
+            <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th style="min-width:150px">Full name</th>
+            <th style="min-width:150px">Date of birth</th>
+            <th style="min-width:150px">Gender</th>
+            <th style="min-width:150px">Address</th>
+            <th style="min-width:150px">Identity card</th>
+            <th style="min-width:150px">Phone</th>
+        </tr>
+    </ng-template>
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-customer>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="customer"></p-tableCheckbox>
+            </td>
+            <td>
+                <a [routerLink]="['/customer/update', customer.id]">{{ customer.fullName }}</a>
+            </td>
+            <td>{{customer.dateOfBirth | dateFormat}}</td>
+            <td>{{ customer.gender ? 'Male' : 'Female' }}</td>
+            <td>{{customer.address}}</td>
+            <td>{{customer.identityCard}}</td>
+            <td>{{customer.phone}}</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<!-- Action Buttons -->
+<div class="actions mt-3">
+    <button class="btn btn-success me-2" (click)="createCustomer()">Register</button>
+    <button class="btn btn-warning me-2" [disabled]="selectedCustomers.length !== 1" (click)="updateCustomer()">Update Customer</button>
+    <button class="btn btn-danger" [disabled]="selectedCustomers.length === 0" (click)="confirmDeactivation()">Delete Customer</button>
+</div>
+<p-dialog header="Confirm Deactivation" [(visible)]="displayConfirmDialog" [modal]="true" [closable]="false" [responsive]="true" [style]="{width: '600px'}">
+    <div class="confirmation-content" style="display: flex; align-items: center;">
+        <i class="pi pi-exclamation-triangle" style="font-size: 2rem; color: orange; margin-right: 15px;"></i>
+        <span>Are you sure you want to deactivate {{selectedCustomers.length}} customer(s)?</span>
+    </div>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-check" label="Yes" class="p-button-danger button-spacing" (click)="deactivateSelected()"></button>
+        <button type="button" pButton icon="pi pi-times" label="No" class="p-button-secondary" (click)="displayConfirmDialog = false"></button>
+    </p-footer>
+</p-dialog>

@@ -1,0 +1,62 @@
+<div class="login-page d-flex align-items-center justify-content-center vh-100">
+  <div
+    class="card shadow p-4 text-center"
+    style="width: 100%; max-width: 400px"
+  >
+    <div class="mb-3">
+      <i class="fa-solid fa-circle-user" style="font-size: 100px"></i>
+    </div>
+
+    <h3 class="mb-4">Member Login</h3>
+    <div *ngIf="isFail" class="text-danger mb-3">{{ msgErr }}</div>
+    <form [formGroup]="loginForm" (ngSubmit)="login()">
+      <mat-form-field appearance="outline" class="w-100 mb-3">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Username"
+          formControlName="username"
+        />
+        <mat-error
+          *ngIf="
+            loginForm.get('username')?.invalid &&
+            loginForm.get('username')?.touched
+          "
+        >
+          Username is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="w-100 mb-4">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error
+          *ngIf="
+            loginForm.get('password')?.invalid &&
+            loginForm.get('password')?.touched
+          "
+        >
+          Password is required
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        [disabled]="loginForm.invalid"
+        mat-raised-button
+        color="primary"
+        class="w-100 mb-4"
+        type="submit"
+      >
+        Sign in
+      </button>
+
+      <a href="#" class="text-muted">Forgot Password?</a>
+    </form>
+  </div>
+</div>

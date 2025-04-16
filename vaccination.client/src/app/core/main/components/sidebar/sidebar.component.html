@@ -1,0 +1,63 @@
+<div
+  style="width: 248px !important; height: 160px !important"
+  class="position-relative"
+>
+  <img
+    class="w-100"
+    src="./../../../../../assets/background.jpg"
+    alt="background"
+  />
+  <div class="position-absolute bottom-0 start-0 end-0 px-2">
+    <div class="overflow-hidden">
+      <img
+        [src]="user.avatar"
+        style="width: 50px; height: 50px"
+        class="rounded-circle"
+      />
+    </div>
+    <div
+      class="pb-3 mt-3 text-white d-flex justify-content-between align-items-end"
+    >
+      <div>
+        <div>{{ user.name }}</div>
+        <div class="mt-1">{{ user.email }}</div>
+      </div>
+      <button
+        (click)="logout()"
+        mat-fab
+        aria-label="Example icon button with a delete icon"
+      >
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node
+    (click)="performAction(node)"
+    *matTreeNodeDef="let node"
+    matTreeNodePadding
+    class="hover"
+  >
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <i [ngClass]="node.icon"></i>
+    {{ node.icon }}
+    <div class="ms-4"></div>
+    {{ node.name }}
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <div class="ms-4"></div>
+    {{ node.name }}
+    <button
+      style="margin-left: auto"
+      mat-icon-button
+      matTreeNodeToggle
+      [attr.aria-label]="'Toggle ' + node.name"
+      class="d-flex justify-content-center align-items-center"
+    >
+      <i class="fa-solid fa-plus" style="font-size: 16px"></i>
+    </button>
+  </mat-tree-node>
+</mat-tree>

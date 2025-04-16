@@ -1,0 +1,67 @@
+<!-- Vaccine Table -->
+<p-table #table [value]="vaccines" [(selection)]="selectedVaccines" dataKey="id" [paginator]="true" [rows]="rows"
+    [selectionPageOnly]="true"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [globalFilterFields]="['vaccineName', 'vaccineTypeDTO.typeName', 'numberOfInjection', 'origin', 'status']">
+
+    <ng-template pTemplate="caption">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <span class="me-2">Show</span>
+                <select [(ngModel)]="rows" class="form-select form-select-sm me-2">
+                    <option *ngFor="let option of rowsPerPageOptions" [value]="option">{{option}}</option>
+                </select>
+                <span>entries</span>
+            </div>
+
+            <div>
+                <input class="form-control" (input)="applyFilterGlobal($event, 'contains')" type="search"
+                    placeholder="Search" aria-label="Search">
+            </div>
+        </div>
+    </ng-template>
+
+    <!-- Table Header -->
+    <ng-template pTemplate="header" >
+        <tr >
+            <th style="width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th style="min-width:150px">Vaccine Id</th>
+            <th style="min-width:150px">Vaccine Name</th>
+            <th style="min-width:150px">Vaccine Type</th>
+            <th style="min-width:150px">Number of Injections</th>
+            <th style="min-width:150px">Origin</th>
+            <th style="min-width:150px">Status</th>
+        </tr>
+    </ng-template>
+
+    <!-- Table Body -->
+    <ng-template pTemplate="body" let-vaccine>
+        <tr>
+            <td>
+                <p-tableCheckbox [value]="vaccine"></p-tableCheckbox>
+            </td>
+            <td>{{vaccine.id}}</td>
+            <td>{{vaccine.vaccineName}}</td>
+            <td>{{vaccine.vaccineTypeDTO?.id}}</td>
+            <td>{{vaccine.numberOfInjection}}</td>
+            <td>{{vaccine.origin}}</td>
+            <td>{{ vaccine.status ? 'Active' : 'Inactive' }}</td>
+        </tr>
+    </ng-template>
+
+</p-table>
+
+<!-- Search Input and Entries Dropdown -->
+
+
+<!-- Action Buttons -->
+<div class="actions mt-3">
+    <button class="btn btn-success me-2" (click)="createVaccine()">New Vaccine</button>
+    <button class="btn btn-warning me-2" [disabled]="selectedVaccines.length !== 1" (click)="updateVaccine()">Update
+        Vaccine</button>
+    <button class="btn btn-danger   " [disabled]="selectedVaccines.length === 0" (click)="deactivateVaccines()">Make
+        Inactive</button>
+</div>

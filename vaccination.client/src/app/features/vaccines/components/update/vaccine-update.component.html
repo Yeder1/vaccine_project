@@ -1,0 +1,111 @@
+<div class="container">
+    <h1>Create New Vaccine</h1>
+    <div class="card">
+        <form [formGroup]="vaccineForm" class=" m-3" (ngSubmit)="onSubmit()">
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="id">Vaccine ID <span class="text-danger">(*)</span></label>
+                        <input id="id" formControlName="id" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="active">Active <span class="text-danger">(*)</span></label>
+                        <div>
+                            <input type="checkbox" id="active" formControlName="active" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4 row">
+                <div class="col-md-4">
+                    <label for="vaccineName">Vaccine Name <span class="text-danger">(*)</span></label>
+                    <input id="vaccineName" formControlName="vaccineName" class="form-control" />
+                    <div *ngIf="vaccineForm.get('vaccineName')?.invalid && vaccineForm.get('vaccineName')?.touched"
+                        class="text-danger">
+                        Vaccine Name is required and should be at most 100 characters.
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="vaccineTypeId">Vaccine Type <span class="text-danger">(*)</span></label>
+                    <select id="vaccineTypeId" formControlName="vaccineTypeId" class="form-control">
+                        <option value="" disabled selected>Select a vaccine type</option>
+                        <option *ngFor="let type of vaccineTypes" [value]="type.id">{{ type.vaccineTypeName }}</option>
+                    </select>
+                    <div *ngIf="vaccineForm.get('vaccineTypeId')?.invalid && vaccineForm.get('vaccineTypeId')?.touched"
+                        class="text-danger">
+                        Vaccine Type is required.
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="numberOfInjection">Number of Inject</label>
+                        <input id="numberOfInjection" formControlName="numberOfInjection" class="form-control" />
+                        <div *ngIf="vaccineForm.get('numberOfInjection')?.invalid && vaccineForm.get('numberOfInjection')?.touched"
+                            class="text-danger">
+                            Number of Injections is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group mb-4 row">
+                <div class="col-md-4">
+                    <label for="usage">Usage</label>
+                    <textarea id="usage" formControlName="usage" class="form-control" rows="4"></textarea>
+                    <div *ngIf="vaccineForm.get('usage')?.invalid && vaccineForm.get('usage')?.touched"
+                        class="text-danger">
+                        Usage should not exceed 200 characters.
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="indication">Indication</label>
+                    <textarea id="indication" formControlName="indication" class="form-control" rows="4"></textarea>
+
+                </div>
+
+                <div class="col-md-4">
+                    <label for="contraindication">Contraindication</label>
+                    <textarea id="contraindication" formControlName="contraindication" class="form-control"
+                        rows="4"></textarea>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="nextBeginNextInjection">Next Begin Injection Date</label>
+                        <input id="nextBeginNextInjection" type="date" formControlName="nextBeginNextInjection"
+                            class="form-control" />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="nextEndNextInjection">Next End Injection Date</label>
+                        <input id="nextEndNextInjection" type="date" formControlName="nextEndNextInjection"
+                            class="form-control" />
+
+                        <div *ngIf="vaccineForm.get('nextEndNextInjection')?.hasError('dateMismatch')">
+                            <small class="text-danger">End date must be greater than the start date.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="origin">Origin</label>
+                        <input id="origin" formControlName="origin" class="form-control" />
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-1 mt-2">Save</button>
+            <button type="button" class="btn btn-secondary me-1 mt-2" (click)="onReset()">Reset</button>
+            <button type="button" class="btn btn-danger mt-2" (click)="onCancel()">Cancel</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,101 @@
+<p-toast></p-toast>
+<p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+<div class="d-flex mb-2 justify-content-between">
+  <div class="d-flex gap-2">
+    <button class="btn btn-success" [routerLink]="['/employee/add']">Create</button>
+    <button class="btn btn-danger" (click)="deleteSelectedEmployee()">
+      Delete
+    </button>
+  </div>
+  <div class="p-inputgroup w-50">
+    <input
+      [(ngModel)]="keyword"
+      type="text"
+      pInputText
+      placeholder="Keyword"
+      (keydown.enter)="search()"
+    />
+    <button
+      (click)="search()"
+      type="button"
+      pButton
+      icon="pi pi-search"
+      styleClass="p-button-warn"
+    ></button>
+  </div>
+</div>
+<div class="table">
+  <p-table
+    [paginator]="true"
+    [value]="employees"
+    [autoLayout]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rows]="5"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [rowsPerPageOptions]="[5, 10, 25]"
+    [(selection)]="selectedEmployee"
+    (onSelectionChange)="onSelectionChange($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th>Employee ID</th>
+        <th>Employee Name</th>
+        <th>Date Of Birth</th>
+        <th>Gender</th>
+        <th>Phone</th>
+        <th>Address</th>
+    </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-employee>
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="employee"></p-tableCheckbox>
+        </td>
+        <td>{{ employee.id }}</td>
+        <td>{{ employee.employeeName }}</td>
+        <td>{{ employee.dateOfBirth | date : "dd/MM/yyyy" }}</td>
+        <td>{{ employee.gender }}</td>
+        <td>{{ employee.phone }}</td>
+        <td>{{ employee.address }}</td>
+        <td class="d-flex gap-2">
+          <!-- <div
+            [routerLink]="['/employee/update', employee.id]"
+            class="btn btn-secondary"
+          >
+            <i class="fa-regular fa-eye"></i>
+          </div> -->
+          <div [routerLink]="['/employee/update', employee.id]" class="btn btn-primary">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </div>
+          <div (click)="deleteItem(employee)" class="btn btn-danger">
+            <i class="fa-regular fa-trash-can"></i>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<ng-template pTemplate="paginatorleft">
+  <p-button
+    type="button"
+    icon="pi pi-plus"
+    styleClass="p-button-text"
+  ></p-button>
+</ng-template>
+<ng-template pTemplate="paginatorright">
+  <p-button
+    type="button"
+    icon="pi pi-cloud"
+    styleClass="p-button-text"
+  ></p-button>
+</ng-template>
+
+<ng-template #loading>
+  <div class="w-100 text-center mt-5">
+    <i class="fas fa-spinner fa-spin fa-2x text-primary"></i>
+  </div>
+</ng-template>

@@ -1,0 +1,67 @@
+<div class="report-injection-container">
+    <h2>Report Injection Result</h2>
+  
+    <!-- Radio buttons to switch between Report and Chart -->
+    <div class="display-type-switch">
+      <label>
+        <input type="radio" name="displayType" [(ngModel)]="displayType" value="report" (change)="onDisplayTypeChange()" /> Report
+      </label>
+      <label>
+        <input type="radio" name="displayType" [(ngModel)]="displayType" value="chart" (change)="onDisplayTypeChange()" /> Chart
+      </label>
+    </div>
+  
+    <!-- Filter section for Report View -->
+    <div *ngIf="displayType === 'report'" class="filter-section">
+      <div class="filter-group">
+        <label>Inject Date:</label>
+        <input type="date" [(ngModel)]="fromDate" placeholder="From" />
+        <input type="date" [(ngModel)]="toDate" placeholder="To" />
+      </div>
+  
+      <div class="filter-group">
+        <label>Prevention:</label>
+        <input type="text" [(ngModel)]="prevention" placeholder="Prevention" />
+      </div>
+  
+      <div class="filter-group">
+        <label>Vaccine Type:</label>
+        <input type="text" [(ngModel)]="vaccineTypeId" placeholder="Vaccine Type" />
+      </div>
+  
+      <div class="filter-buttons">
+        <button (click)="filterReport()">Filter</button>
+        <button (click)="resetFilters()">Reset</button>
+      </div>
+    </div>
+  
+    <!-- Report Table -->
+    <table *ngIf="displayType === 'report'" class="report-table">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Vaccine</th>
+          <th>Prevention</th>
+          <th>Customer Name</th>
+          <th>Date of Inject</th>
+          <th>Number of Inject</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of reportInjections">
+          <td>{{ report.no }}</td>
+          <td>{{ report.vaccineName }}</td>
+          <td>{{ report.prevention }}</td>
+          <td>{{ report.customerName }}</td>
+          <td>{{ report.injectDate | date: 'MM/dd/yyyy' }}</td>
+          <td>{{ report.numberOfInject }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Chart Section -->
+    <div *ngIf="displayType === 'chart'" class="chart-section">
+      <canvas #injectionChart></canvas>
+    </div>
+  </div>
+  

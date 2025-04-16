@@ -1,0 +1,112 @@
+<!-- vaccine-form.component.html -->
+<form *ngIf="vaccinationResultDTO$ | async " [formGroup]="vaccineForm" (ngSubmit)="onSubmit()"
+    class="container mt-4 card p-2">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="customerId" class="form-label">Customer<span class="text-danger">*</span>:</label>
+            <select *ngIf="customers$ | async as customers" formControlName="customerId" class="form-select"
+                id="customerId" required>
+                <option value="" disabled>-- Select Customer --</option>
+                <!-- <option *ngFor="let customer of customers" [value]="customer.fullName"
+                    [selected]="customer.fullName === vaccineResultDTO?.customer.fullName">
+                    {{ customer.fullName }}
+                </option> -->
+                <option *ngFor="let cus of customers" [value]="cus.id">
+                    {{ cus.fullName }}
+                </option>
+
+            </select>
+            <div *ngIf="vaccineForm.get('customerId')?.touched && vaccineForm.get('customerId')?.invalid"
+                class="text-danger">
+                Customer is required.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="prevention" class="form-label">Prevention<span class="text-danger">*</span>:</label>
+            <select *ngIf="vaccineType$ | async as vaccineType" formControlName="prevention" class="form-select"
+                id="prevention" required>
+                <option value="" disabled>-- Select Prevention --</option>
+                <!-- <option *ngFor="let prevention of preventions" [value]="prevention"
+                                [selected]="prevention === vaccineResultDTO?.prevention">
+                                {{ prevention }}
+                            </option> -->
+
+                <option *ngFor="let vaccineT of vaccineType" [value]="vaccineT.description">
+                    {{ vaccineT.description }}
+                </option>
+            </select>
+            <div *ngIf="vaccineForm.get('prevention')?.touched && vaccineForm.get('prevention')?.invalid"
+                class="text-danger">
+                Prevention is required.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="vaccineId" class="form-label">Vaccine type<span class="text-danger">*</span>:</label>
+            <select *ngIf="vaccineType$ | async as vaccineType" formControlName="vaccineId" class="form-select"
+                id="vaccineId" required>
+                <option value="" disabled>-- Select vaccine type --</option>
+                <!-- <option *ngFor="let vaccineType of vaccineTypes" [value]="vaccineType"
+                                [selected]="vaccineType === vaccineResultDTO?.vaccine">
+                                {{ vaccineType }}
+                            </option> -->
+
+                <option *ngFor="let vaccineT of vaccineType" [value]="vaccineT.id">
+                    {{ vaccineT.vaccineTypeName }}
+                </option>
+            </select>
+            <div *ngIf="vaccineForm.get('vaccineId')?.touched && vaccineForm.get('vaccineId')?.invalid"
+                class="text-danger">
+                Vaccine type is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="numberOfInjection" class="form-label">Injection:</label>
+            <input type="number" formControlName="numberOfInjection" class="form-control" id="numberOfInjection" min="0"
+                required>
+            <div *ngIf="vaccineForm.get('numberOfInjection')?.touched && vaccineForm.get('numberOfInjection')?.invalid"
+                class="text-danger">
+                Injection is required.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="injectionDate" class="form-label">Date of injection:</label>
+            <input type="date" formControlName="injectionDate" class="form-control" id="injectionDate" required>
+            <div *ngIf="vaccineForm.get('injectionDate')?.touched && vaccineForm.get('injectionDate')?.invalid"
+                class="text-danger">
+                Date of injection is required.
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="nextInjectionDate" class="form-label">Next injection appointment:</label>
+            <input type="date" formControlName="nextInjectionDate" class="form-control" id="nextInjectionDate" required>
+            <div *ngIf="vaccineForm.get('nextInjectionDate')?.touched && vaccineForm.get('nextInjectionDate')?.invalid"
+                class="text-danger">
+                Next injection appointment is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="injectionPlace" class="form-label">Place of injection:</label>
+            <input type="text" formControlName="injectionPlace" class="form-control" id="injectionPlace" required>
+            <div *ngIf="vaccineForm.get('injectionPlace')?.touched && vaccineForm.get('injectionPlace')?.invalid"
+                class="text-danger">
+                Place of injection is required.
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-success me-2">Save</button>
+            <button type="button" class="btn btn-primary me-2" (click)="onReset()">Reset</button>
+            <button type="button" class="btn btn-warning" (click)="onCancel()">Cancel</button>
+        </div>
+    </div>
+</form>
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>

@@ -1,0 +1,31 @@
+<div style="min-width: 100vw; min-height: 100vh">
+  <app-header></app-header>
+  <mat-drawer-container
+    style="min-height: calc(100vh - 70px)"
+    class="example-container"
+    autosize
+  >
+    <mat-drawer
+      [opened]="isOpenMenu"
+      (openedChange)="openChanged($event)"
+      #drawer
+      class="example-sidenav"
+      mode="side"
+      style="width: 250px !important"
+    >
+      <app-sidebar></app-sidebar>
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+      <!-- <div (click)="drawer.toggle()" class="py-2 position-relative">
+        <i
+          style="cursor: pointer; left: 0px"
+          class="fa-solid fa-circle-chevron-right fs-5 position-absolute"
+        ></i>
+      </div> -->
+      <div class="p-3">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </mat-drawer-container>
+</div>

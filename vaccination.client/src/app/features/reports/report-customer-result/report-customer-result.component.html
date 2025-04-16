@@ -1,0 +1,61 @@
+<div class="report-container">
+    <!-- Radio buttons to switch between Report and Chart -->
+    <div class="filter-options">
+      <label>
+        <input type="radio" name="displayType" [(ngModel)]="displayType" value="report" (change)="onDisplayTypeChange()" /> Report
+      </label>
+      <label>
+        <input type="radio" name="displayType" [(ngModel)]="displayType" value="chart" (change)="onDisplayTypeChange()" /> Chart
+      </label>
+    </div>
+  
+    <!-- Filter section for Report view -->
+    <div *ngIf="displayType === 'report'" class="filter-form">
+      <label>Date of Birth:</label>
+      <input type="date" [(ngModel)]="dobFrom" placeholder="From" />
+      <input type="date" [(ngModel)]="dobTo" placeholder="To" />
+      
+      <label>Full name:</label>
+      <input type="text" [(ngModel)]="fullName" />
+      
+      <label>Address:</label>
+      <input type="text" [(ngModel)]="address" />
+      
+      <button (click)="resetFilters()">Reset</button>
+      <button (click)="filterReport()">Filter</button>
+    </div>
+  
+    <!-- Table report view -->
+    <table *ngIf="displayType === 'report'" class="customer-table">
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Full Name</th>
+          <th>Date of Birth</th>
+          <th>Address</th>
+          <th>Identity Card</th>
+          <th>Number of Inject</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let customer of reportCustomers">
+          <td>{{ customer.no }}</td>
+          <td>{{ customer.fullName }}</td>
+          <td>{{ customer.dob | date: 'dd/MM/yyyy' }}</td>
+          <td>{{ customer.address }}</td>
+          <td>{{ customer.identityCard }}</td>
+          <td>{{ customer.numberOfInject }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Chart view -->
+    <div *ngIf="displayType === 'chart'" class="chart-container">
+      <label>Select Year:</label>
+      <select [(ngModel)]="selectedYear" (change)="loadChartData()">
+        <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+      </select>
+      <canvas #customerChart></canvas>
+    </div>
+  </div>
+  

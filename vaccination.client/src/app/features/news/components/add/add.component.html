@@ -1,0 +1,71 @@
+<p-toast></p-toast>
+<h1 class="text-center fs-2">Create news</h1>
+<div class="card">
+  <form
+    [formGroup]="addForm"
+    (ngSubmit)="add()"
+    class="p-3 d-flex flex-column gap-2"
+  >
+    <mat-form-field class="w-50" [appearance]="'outline'">
+      <mat-label>Title</mat-label>
+      <input matInput required formControlName="title" />
+      <mat-error
+        *ngIf="
+          addForm.get('title')?.hasError('required') &&
+          addForm.get('title')?.touched
+        "
+      >
+        Title is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [appearance]="'outline'">
+      <mat-label>Preview</mat-label>
+      <textarea matInput required formControlName="preview"></textarea>
+      <mat-error
+        *ngIf="
+          addForm.get('preview')?.hasError('required') &&
+          addForm.get('preview')?.touched
+        "
+      >
+        Preview is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [appearance]="'outline'">
+      <mat-label>Content</mat-label>
+      <textarea matInput required formControlName="content"></textarea>
+      <mat-error
+        *ngIf="
+          addForm.get('content')?.hasError('required') &&
+          addForm.get('content')?.touched
+        "
+      >
+        Content is required
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field [appearance]="'outline'">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="newsTypeId">
+        <mat-option *ngFor="let type of listTypes" [value]="type.id">{{
+          type.newsTypeName
+        }}</mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="
+          addForm.get('newsTypeId')?.hasError('required') &&
+          addForm.get('newsTypeId')?.touched
+        "
+      >
+        Type is required
+      </mat-error>
+    </mat-form-field>
+    <div class="d-flex gap-2">
+      <button [disabled]="addForm.invalid" class="btn btn-success">Save</button>
+      <button type="button" class="btn btn-danger" (click)="reset()">
+        Reset
+      </button>
+      <button type="button" class="btn btn-secondary" [routerLink]="['/news']">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

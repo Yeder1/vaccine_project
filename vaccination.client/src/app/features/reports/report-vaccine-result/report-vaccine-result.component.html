@@ -1,0 +1,76 @@
+<div class="view-toggle">
+  <!-- Radio buttons to switch between Report and Chart views -->
+  <label>
+    <input type="radio" name="displayType" [(ngModel)]="displayType" value="report" (change)="onDisplayTypeChange()" />
+    Report
+  </label>
+  <label>
+    <input type="radio" name="displayType" [(ngModel)]="displayType" value="chart" (change)="onDisplayTypeChange()" />
+    Chart
+  </label>
+</div>
+
+<div class="filter-section" *ngIf="displayType === 'report'">
+  <div class="filter-field">
+    <label for="injectionDateBegin">Begin Injection Date</label>
+    <input type="date" id="injectionDateBegin" [(ngModel)]="injectionDateBegin" />
+  </div>
+  <div class="filter-field">
+    <label for="injectionDateEnd">End Injection Date</label>
+    <input type="date" id="injectionDateEnd" [(ngModel)]="injectionDateEnd" />
+  </div>
+  <div class="filter-field">
+    <label for="vaccineType">Vaccine Type</label>
+    <select id="vaccineType" [(ngModel)]="vaccineType">
+      <option value="">Select Vaccine Type</option>
+      <option *ngFor="let type of vaccineTypes" [value]="type">{{ type }}</option>
+    </select>
+  </div>
+  <div class="filter-field">
+    <label for="origin">Origin</label>
+    <input id="origin" [(ngModel)]="origin" placeholder="Enter Origin" />
+  </div>
+  <div class="button-group">
+    <button (click)="applyFilter()">Filter</button>
+    <button (click)="resetFilter()">Reset</button>
+  </div>
+</div>
+
+<div class="table-section" *ngIf="displayType === 'report'">
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Vaccine Name</th>
+        <th>Vaccine Type</th>
+        <th>Number of Injections</th>
+        <th>Begin Next Inject Date</th>
+        <th>End Next Inject Date</th>
+        <th>Origin</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let vaccine of reportVaccines">
+        <td>{{ vaccine.no }}</td>
+        <td>{{ vaccine.vaccineName }}</td>
+        <td>{{ vaccine.vaccineType }}</td>
+        <td>{{ vaccine.numOfInject }}</td>
+        <td>{{ vaccine.beginNextInjectDate | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ vaccine.endNextInjectDate | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ vaccine.origin }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="chart-section" *ngIf="displayType === 'chart'">
+  <select [(ngModel)]="selectedYear" (change)="loadChartData()">
+    <option [value]="2021">2021</option>
+    <option [value]="2022">2022</option>
+    <option [value]="2023">2023</option>
+  </select>
+
+  <div class="chart-container">
+    <canvas #vaccineChart></canvas>
+  </div>
+</div>

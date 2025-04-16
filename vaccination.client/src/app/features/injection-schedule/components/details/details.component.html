@@ -1,0 +1,49 @@
+<h2 class="text-center">INJECTION SCHEDULE DETAILS</h2>
+<div class="container" *ngIf="schedule">
+  <div class="row mb-3">
+    <div class="col-3 text-end">
+      <strong>Vaccine:</strong>
+    </div>
+    <div class="col-9">
+      {{ schedule.vaccineName }}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3 text-end">
+      <strong>Time:</strong>
+    </div>
+    <div class="col-9">
+      From {{ schedule.startDate | date:'yyyy/MM/dd' }} to {{ schedule.endDate | date:'yyyy/MM/dd' }}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3 text-end">
+      <strong>Status:</strong>
+    </div>
+    <div class="col-9">
+      {{ schedule.status }}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3 text-end">
+      <strong>Place:</strong>
+    </div>
+    <div class="col-9">
+      {{ schedule.place }}
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col-3 text-end">
+      <strong>Note:</strong>
+    </div>
+    <div class="col-9">
+      {{ schedule.description || 'Nothing to show' }}
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-12 text-center">
+      <button class="btn btn-warning me-2" (click)="onUpdate()">Update</button>
+      <button class="btn btn-dark" (click)="onBack()">Back</button>
+    </div>
+  </div>
+</div>
